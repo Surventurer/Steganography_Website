@@ -1,0 +1,2 @@
+python 3.10.11
+reportlab,PyPDF2- pdf

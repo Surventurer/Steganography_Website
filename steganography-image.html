@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Steganography</title>
+    <link rel="stylesheet" href="steganography-image.css">
+</head>
+<body>
+    
+    <div class="container">
+        <h1>IMAGE STEGANOGRAPHY</h1>
+        <a href="home.html"><button class="btn">Home</button></a>
+        <br><button id="encode" class="btn1">Encode</button>
+        <button id="decode" class="btn1">Decode</button>
+        <form action="" id="textEntry">
+            <br>
+            <input class="Choseefile" type="file" id="inputImage" accept="image/*">
+            <br><br>
+            <textarea style="position: relative; margin: -3.5%;" id="hiddenText" placeholder="Write text here"></textarea>
+            <br>
+            <button style="left: 36%; margin: 3.5%;" class="submitBtn btn">Submit</button> 
+        </form>
+    </div>
+
+    <script>
+        let encodeButton = document.getElementById('encode');
+        let decodeButton = document.getElementById('decode');
+        let textEntry = document.getElementById('textEntry');
+        let inputImage = document.getElementById('inputImage');
+        let hiddenText = document.getElementById('hiddenText');
+        let submitButton = document.querySelector('.submitBtn');
+        //let downloadLink = document.getElementById('download');
+
+        encodeButton.addEventListener('click', () => {
+            encodeButton.style.display = 'none';
+            decodeButton.style.display = 'none';
+            textEntry.style.display = 'block';
+            submitButton.style.display = 'block';
+        });
+
+        decodeButton.addEventListener('click', () => {
+            encodeButton.style.display = 'none';
+            decodeButton.style.display = 'none';
+            textEntry.style.display = 'block';
+            submitButton.style.display = 'block';
+        });
+
+        submitButton.addEventListener('click', () => {
+            alert('Your data is submitted');
+            
+            alert('Downloaded');
+            //downloadLink.style.display = 'block';
+        });
+
+
+        /* downloadLink.addEventListener('click', () => {
+            alert('Downloaded');
+            downloadLink.style.display = 'none';
+            encodeButton.style.display = 'block';
+            decodeButton.style.display = 'block';
+            submitButton.style.display = 'none';
+        }); */
+    </script>
+</body>
+</html>
