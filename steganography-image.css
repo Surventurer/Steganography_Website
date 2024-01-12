@@ -14,6 +14,9 @@
         #hiddenText1{
             display: none;
         }
+        #hiddenText2{
+            display: none;
+        }
         .Choseefile{
             position: relative;
             width: 71%;

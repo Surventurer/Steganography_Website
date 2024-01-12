@@ -27,7 +27,7 @@
             <div id="hiddenText1"><br><br>
             <textarea style="position: relative; margin: -3.5%;" placeholder="Your seceret message here"></textarea>
             <br></div>
-            <button style="left: 36%; margin: 3.5%;" class="desubmitBtn btn">Submit</button> 
+            <button id="hiddenText2" style="left: 36%; margin: 3.5%;" class="desubmitBtn btn">Submit</button> 
         </form>
     </div>
 
@@ -64,7 +64,9 @@
         });
 
         desubmitBut.addEventListener('click', () => {
+            event.preventDefault();
             hiddenText1.style.display ='block'
+            hiddenText2.style.display = 'none';
         });
 
 
