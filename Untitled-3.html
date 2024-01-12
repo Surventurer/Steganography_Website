@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Steganography</title>
+    <link rel="stylesheet" href="steganography-image.css">
+</head>
+<body>
+    <div style="height: 70%;"><a href="steganography-image.html"><button id="hback" class="btn">Back</button></a></div>
+    <div class="container">
+        <h1>IMAGE STEGANOGRAPHY</h1>
+        
+        <a href="home.html"><button class="btn">Home</button></a>
+        <br><button id="encode" class="btn1">Encode</button>
+        <button id="decode" class="btn1">Decode</button>
+        <form action="" id="textEntry">
+            <br>
+            <input class="Choseefile" type="file" id="inputImage" accept="image/*">
+            <br><br>
+            <textarea style="position: relative; margin: -3.5%;" id="hiddenText" placeholder="Write text here"></textarea>
+            <br>
+            <button style="left: 36%; margin: 3.5%;" class="submitBtn btn">Submit</button> 
+        </form>
+
+        <form action="" id="textEntry1">
+            <br>
+            <input class="Choseefile" type="file" id="inputImage1" accept="image/png">
+            <div id="hiddenText1"><br><br>
+                <textarea style="position: relative; margin: -3.5%;" placeholder="Your secret message here"></textarea>
+                <br>
+            </div>
+            <button style="left: 36%; margin: 3.5%;" class="desubmitBtn btn">Submit</button> 
+        </form>
+    </div>
+
+    <script>
+        let encodeButton = document.getElementById('encode');
+        let decodeButton = document.getElementById('decode');
+        let textEntry = document.getElementById('textEntry');
+        let textEntry1 = document.getElementById('textEntry1');
+        let hback = document.getElementById('hback');
+        let submitButton = document.querySelector('.submitBtn');
+        let desubmitBut = document.querySelector('.desubmitBtn');
+
+        encodeButton.addEventListener('click', () => {
+            encodeButton.style.display = 'none';
+            decodeButton.style.display = 'none';
+            hback.style.display = 'block';
+            textEntry.style.display = 'block';
+            submitButton.style.display = 'block';
+        });
+
+        decodeButton.addEventListener('click', () => {
+            encodeButton.style.display = 'none';
+            decodeButton.style.display = 'none';
+            hback.style.display = 'block';
+            textEntry1.style.display = 'block';
+            desubmitBut.style.display = 'block';
+        });
+
+        submitButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default form submission
+            alert('Your data is submitted');
+            alert('Downloaded');
+            // Reset or hide the form elements as needed
+            textEntry.style.display = 'none';
+            // Additional code if you want to reset the form values
+            // document.getElementById('hiddenText').value = '';
+        });
+
+        desubmitBut.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default form submission
+            hiddenText1.style.display = 'block';
+            // Additional code if you want to reset the form values
+            // document.getElementById('inputImage1').value = '';
+        });
+    </script>
+</body>
+</html>
