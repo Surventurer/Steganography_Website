@@ -11,6 +11,9 @@
         .container {
             text-align: center;
         }
+        #hiddenText1{
+            display: none;
+        }
         .Choseefile{
             position: relative;
             width: 71%;
@@ -26,6 +29,9 @@
         #textEntry {
             display: none;
         }
+        #textEntry1{
+            display: none;
+        }
 
         textArea {
             width: 300px;
@@ -39,6 +45,13 @@
             cursor: pointer;
         }
 
+        .desubmitBtn {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
         #download {
             display: none;
             background-color: yellow;
@@ -46,6 +59,9 @@
             padding: 10px 20px;
             border: none;
             cursor: pointer;
+        }
+        #hback{
+            display: none;
         }
         .btn {
             display: inline-block;

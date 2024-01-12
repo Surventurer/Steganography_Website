@@ -5,9 +5,10 @@
     <link rel="stylesheet" href="steganography-image.css">
 </head>
 <body>
-    
+    <div style="height: 70%;"><a href="steganography-image.html" ><button id="hback" class="btn">Back</button></a></div>
     <div class="container">
         <h1>IMAGE STEGANOGRAPHY</h1>
+        
         <a href="home.html"><button class="btn">Home</button></a>
         <br><button id="encode" class="btn1">Encode</button>
         <button id="decode" class="btn1">Decode</button>
@@ -19,20 +20,32 @@
             <br>
             <button style="left: 36%; margin: 3.5%;" class="submitBtn btn">Submit</button> 
         </form>
+
+        <form action="" id="textEntry1">
+            <br>
+            <input class="Choseefile" type="file" id="inputImage" accept="image/png">
+            <div id="hiddenText1"><br><br>
+            <textarea style="position: relative; margin: -3.5%;" placeholder="Your seceret message here"></textarea>
+            <br></div>
+            <button style="left: 36%; margin: 3.5%;" class="desubmitBtn btn">Submit</button> 
+        </form>
     </div>
 
     <script>
         let encodeButton = document.getElementById('encode');
         let decodeButton = document.getElementById('decode');
         let textEntry = document.getElementById('textEntry');
+        let textEntry1 = document.getElementById('textEntry1');
+        let hback = document.getElementById('hback');
         let inputImage = document.getElementById('inputImage');
-        let hiddenText = document.getElementById('hiddenText');
+        let hiddenText1 = document.getElementById('hiddenText1');
         let submitButton = document.querySelector('.submitBtn');
-        //let downloadLink = document.getElementById('download');
+        let desubmitBut = document.querySelector('.desubmitBtn');
 
         encodeButton.addEventListener('click', () => {
             encodeButton.style.display = 'none';
             decodeButton.style.display = 'none';
+            hback.style.display = 'block';
             textEntry.style.display = 'block';
             submitButton.style.display = 'block';
         });
@@ -40,25 +53,21 @@
         decodeButton.addEventListener('click', () => {
             encodeButton.style.display = 'none';
             decodeButton.style.display = 'none';
-            textEntry.style.display = 'block';
-            submitButton.style.display = 'block';
+            hback.style.display = 'block';
+            textEntry1.style.display = 'block';
+            desubmitBut.style.display = 'block';
         });
 
         submitButton.addEventListener('click', () => {
             alert('Your data is submitted');
-            
             alert('Downloaded');
-            //downloadLink.style.display = 'block';
+        });
+
+        desubmitBut.addEventListener('click', () => {
+            hiddenText1.style.display ='block'
         });
 
 
-        /* downloadLink.addEventListener('click', () => {
-            alert('Downloaded');
-            downloadLink.style.display = 'none';
-            encodeButton.style.display = 'block';
-            decodeButton.style.display = 'block';
-            submitButton.style.display = 'none';
-        }); */
     </script>
 </body>
 </html>
