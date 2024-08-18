@@ -1,0 +1,153 @@
+
+{% load static %}<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="steg​anography, text steganography, image steganography, video steganography, audio steganography, cryptography">
+    <meta name="description" content="">
+    <title>Text Steganography</title>
+    <link rel="icon" href="{% static 'images/BlueWhiteSimpleCyberSecurityLogo.png'%}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'nicepage.css'%}" media="screen">
+    <link rel="stylesheet" href="{% static 'Image.css'%}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'jquery.js'%}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'nicepage.js'%}" defer=""></script>
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i">
+    
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "Steganography",
+		"logo": "images/BlueWhiteSimpleCyberSecurityLogo.png",
+		"sameAs": [
+				"https://www.linkedin.com/in/abhinav-rajpati-551544250/",
+				"https://github.com/Surventurer",
+				"mailto:abhinavrajpati3344@gmail.com?subject=Enquiry"
+		]
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Audio Steganography">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body data-path-to-root="./" data-include-products="false" class="u-body u-stick-footer u-xl-mode" data-lang="en"><header class="u-black u-clearfix u-header u-sticky u-sticky-316f u-header" id="sec-96e4"><div class="u-clearfix u-sheet u-sheet-1">
+        <a href="./" class="u-image u-logo u-image-1" title="Home" data-image-width="1563" data-image-height="1563">
+          <img src="{% static 'images/BlueWhiteSimpleCyberSecurityLogo.png'%}" class="u-logo-image u-logo-image-1">
+        </a>
+        <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+          <div class="menu-collapse u-custom-font u-font-georgia" style="font-size: 1rem; letter-spacing: 0px; text-transform: uppercase; font-weight: 700;">
+            <a class="u-button-style u-custom-active-color u-custom-border u-custom-border-color u-custom-effect-duration u-custom-hover-color u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-color u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+              <svg class="u-svg-link" viewBox="0 0 24 24"><use xlink:href="#menu-hamburger"></use></svg>
+              <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+            </a>
+          </div>
+          <div class="u-custom-menu u-nav-container">
+            <ul class="u-custom-font u-font-georgia u-nav u-spacing-2 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-white u-text-white" href="{% url 'index'%}" style="padding: 10px 20px;">Home</a>
+            </li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-white u-text-white" href="{% url 'Text'%}" rel="nofollow" style="padding: 10px 20px;">Text</a>
+            </li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-white u-text-white" href="{% url 'Image'%}" rel="nofollow" style="padding: 10px 20px;">Image</a>
+            </li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-white u-text-white" href="{% url 'Audio'%}" rel="nofollow" style="padding: 10px 20px;">Audio</a>
+            </li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-white u-text-white" href="{% url 'Video'%}" rel="nofollow" style="padding: 10px 20px;">Video</a>
+            </li><li class="u-nav-item"><a class="u-active-palette-1-base u-button-style u-file-link u-hover-palette-1-light-1 u-nav-link u-text-active-white u-text-hover-white u-text-white" href="{% static 'files/SRS.html'%}" target="_blank" style="padding: 10px 20px;">Deep Drive</a>
+            </li></ul>
+          </div>
+          <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+              <div class="u-inner-container-layout u-sidenav-overflow">
+                <div class="u-menu-close"></div>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'index'%}">Home</a>
+                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'Text'%}" rel="nofollow">Text</a>
+                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'Image'%}" rel="nofollow">Image</a>
+                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'Audio'%}" rel="nofollow">Audio</a>
+                </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{% url 'Video'%}" rel="nofollow">Video</a>
+                </li><li class="u-nav-item"><a class="u-button-style u-file-link u-nav-link" href="{% static 'files/SRS.html'%}" target="_blank">Deep Drive</a>
+                </li></ul>
+              </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+          </div>
+        </nav>
+      </div></header>
+    <section class="u-black u-clearfix u-section-1" id="sec-f751">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="data-layout-selected u-clearfix u-expanded-width u-layout-wrap u-layout-wrap-1">
+          <div class="u-layout">
+            <div class="u-layout-row">
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-1">
+                <div class="u-container-layout u-valign-bottom u-container-layout-1">
+                  <a href="Text.html#carousel-318d" class="u-border-none u-btn u-btn-round u-button-style u-custom-font u-font-roboto u-hover-palette-1-light-1 u-palette-1-base u-radius u-btn-1">Encode </a>
+                  <a href="Text.html#carousel-318d" class="u-border-none u-btn u-btn-round u-button-style u-custom-font u-font-roboto u-hover-palette-1-light-1 u-palette-1-base u-radius u-btn-2">Decode </a>
+                </div>
+              </div>
+              <div class="u-container-style u-layout-cell u-size-30 u-layout-cell-2">
+                <div class="u-container-layout u-valign-bottom u-container-layout-2">
+                  <img class="u-expanded-width u-image u-image-default u-image-1" src="{% static 'images/IMG-20240815-WA0004.jpg'%}" alt="" data-image-width="1200" data-image-height="675">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style data-mode="XXL" data-visited="true">@media (max-width: 0px) {
+   .u-section-1 {
+    background-image: none;
+  }
+  .u-section-1 .u-sheet-1 {
+    min-height: 400px;
+  }
+  .u-section-1 .u-layout-wrap-1 {
+    margin-top: 60px;
+    margin-bottom: 60px;
+    position: relative;
+  }
+  .u-section-1 .u-layout-cell-1 {
+    min-height: 400px;
+  }
+  .u-section-1 .u-container-layout-1 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .u-section-1 .u-layout-cell-2 {
+    min-height: 400px;
+  }
+  .u-section-1 .u-container-layout-2 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .u-section-1 .u-image-1 {
+    height: 340px;
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: -2px -2px 25px 0px rgba(128,128,128,1);
+  }
+}</style>
+    </section>
+    
+    
+    
+    <footer class="u-black u-clearfix u-container-align-center-lg u-container-align-center-md u-container-align-center-xl u-container-align-center-xxl u-footer u-footer" id="sec-a419"><div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-xl u-valign-middle-xxl u-sheet-1">
+        <div class="u-align-center u-social-icons u-spacing-10 u-social-icons-1">
+          <a class="u-social-url" target="_blank" data-type="LinkedIn" title="LinkedIn" href="https://www.linkedin.com/in/abhinav-rajpati-551544250/"><span class="u-icon u-social-icon u-social-linkedin u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112"><use xlink:href="#svg-aa24"></use></svg><svg class="u-svg-content" viewBox="0 0 112 112" x="0" y="0" id="svg-aa24"><circle fill="currentColor" cx="56.1" cy="56.1" r="55"></circle><path fill="#FFFFFF" d="M41.3,83.7H27.9V43.4h13.4V83.7z M34.6,37.9L34.6,37.9c-4.6,0-7.5-3.1-7.5-7c0-4,3-7,7.6-7s7.4,3,7.5,7
+      C42.2,34.8,39.2,37.9,34.6,37.9z M89.6,83.7H76.2V62.2c0-5.4-1.9-9.1-6.8-9.1c-3.7,0-5.9,2.5-6.9,4.9c-0.4,0.9-0.4,2.1-0.4,3.3v22.5
+      H48.7c0,0,0.2-36.5,0-40.3h13.4v5.7c1.8-2.7,5-6.7,12.1-6.7c8.8,0,15.4,5.8,15.4,18.1V83.7z"></path></svg></span>
+          </a>
+          <a class="u-social-url" target="_blank" data-type="Github" title="Github" href="https://github.com/Surventurer"><span class="u-icon u-social-github u-social-icon u-icon-2"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112"><use xlink:href="#svg-71fb"></use></svg><svg class="u-svg-content" viewBox="0 0 112 112" x="0" y="0" id="svg-71fb"><circle fill="currentColor" cx="56.1" cy="56.1" r="55"></circle><path fill="#FFFFFF" d="M88,51.3c0-5.5-1.9-10.2-5.3-13.7c0.6-1.3,2.3-6.5-0.5-13.5c0,0-4.2-1.4-14,5.3c-4.1-1.1-8.4-1.7-12.7-1.8
+	c-4.3,0-8.7,0.6-12.7,1.8c-9.7-6.6-14-5.3-14-5.3c-2.8,7-1,12.2-0.5,13.5C25,41.2,23,45.7,23,51.3c0,19.6,11.9,23.9,23.3,25.2
+	c-1.5,1.3-2.8,3.5-3.2,6.8c-3,1.3-10.2,3.6-14.9-4.3c0,0-2.7-4.9-7.8-5.3c0,0-5-0.1-0.4,3.1c0,0,3.3,1.6,5.6,7.5c0,0,3,9.1,17.2,6
+	c0,4.3,0.1,8.3,0.1,9.5h25.2c0-1.7,0.1-7.2,0.1-14c0-4.7-1.7-7.9-3.4-9.4C76,75.2,88,70.9,88,51.3z"></path></svg></span>
+          </a>
+          <a class="u-social-url" target="_blank" data-type="Email" title="Email" href="mailto:abhinavrajpati3344@gmail.com?subject=Enquiry"><span class="u-icon u-social-email u-social-icon u-icon-3"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112"><use xlink:href="#svg-5397"></use></svg><svg class="u-svg-content" viewBox="0 0 112 112" x="0" y="0" id="svg-5397"><circle fill="currentColor" cx="56.1" cy="56.1" r="55"></circle><path id="path3864" fill="#FFFFFF" d="M27.2,28h57.6c4,0,7.2,3.2,7.2,7.2l0,0v42.7c0,3.9-3.2,7.2-7.2,7.2l0,0H27.2
+	c-4,0-7.2-3.2-7.2-7.2V35.2C20,31.1,23.2,28,27.2,28 M56,52.9l28.8-17.8H27.2L56,52.9 M27.2,77.7h57.6V43.5L56,61.3L27.2,43.5V77.7z
+	"></path></svg></span>
+          </a>
+        </div>
+        <p class="u-align-center u-small-text u-text u-text-default-lg u-text-default-md u-text-default-sm u-text-default-xl u-text-default-xs u-text-variant u-text-1"> © Copyrights 2024 - 2099 Steganography. All Rights Reserved.</p>
+      </div></footer>
+  
+</body></html>
