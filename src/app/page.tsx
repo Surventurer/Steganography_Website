@@ -18,7 +18,7 @@ export default function Home() {
                     <p>
                         Steganography is the practice of representing information within another message or physical object, in such a manner that the presence of the information is not evident to human inspection. In computing/electronic contexts, a computer file, message, image, or video is concealed within another file, message, image, or video.
                         <Button variant="link" asChild className="p-1 text-base align-baseline">
-                            <Link href="#">Read more</Link>
+                            <Link href="https://en.wikipedia.org/wiki/Steganography">Read more</Link>
                         </Button>
                     </p>
                     <p>
