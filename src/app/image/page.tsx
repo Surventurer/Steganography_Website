@@ -13,7 +13,7 @@ export default function ImageSteganographyPage() {
             <AppHeader />
 
             <main className="flex-grow flex flex-col items-center p-4">
-                 <h1 className="text-4xl sm:text-6xl font-bold text-foreground mt-12 mb-8 font-serif tracking-wide text-center">
+                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-foreground mt-12 mb-8 font-serif tracking-wide text-center break-words">
                     Image Steganography
                 </h1>
                 
