@@ -30,7 +30,7 @@ export default function ImageSteganographyPage() {
                         <DecodePanel className="h-full" />
                       </TabsContent>
                     </Tabs>
-                    <div className="relative rounded-lg shadow-xl overflow-hidden">
+                    <div className="relative rounded-lg shadow-xl overflow-hidden min-h-[500px]">
                         <Image
                             src="https://placehold.co/500x500.png"
                             alt="Steganography process illustration"
