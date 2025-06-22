@@ -32,7 +32,7 @@ export default function TextSteganographyPage() {
                     </Tabs>
                     <div className="relative rounded-lg shadow-xl overflow-hidden min-h-[500px]">
                         <Image
-                            src="https://placehold.co/500x500.png"
+                            src="/text-steganography.png"
                             alt="Text steganography illustration"
                             fill
                             className="object-cover"

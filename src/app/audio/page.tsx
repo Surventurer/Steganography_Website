@@ -32,7 +32,7 @@ export default function AudioSteganographyPage() {
                     </Tabs>
                     <div className="relative rounded-lg shadow-xl overflow-hidden min-h-[500px]">
                         <Image
-                            src="https://placehold.co/500x500.png"
+                            src="/audio-steganography.png"
                             alt="Audio steganography illustration"
                             fill
                             className="object-cover"

@@ -32,7 +32,7 @@ export default function VideoSteganographyPage() {
                     </Tabs>
                     <div className="relative rounded-lg shadow-xl overflow-hidden min-h-[500px]">
                         <Image
-                            src="https://placehold.co/500x500.png"
+                            src="/video-steganography.png"
                             alt="Video steganography illustration"
                             fill
                             className="object-cover"
