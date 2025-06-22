@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -40,10 +41,10 @@ export default function Home() {
                 <h1 className="text-5xl sm:text-7xl font-bold text-destructive mb-8 font-serif tracking-wide">
                     Welcome to<br/>Steganography!
                 </h1>
-                <div className="max-w-3xl space-y-6 text-muted-foreground/90 text-lg">
+                <div className="max-w-3xl space-y-6 text-foreground text-lg">
                     <p>
                         Steganography is the practice of representing information within another message or physical object, in such a manner that the presence of the information is not evident to human inspection. In computing/electronic contexts, a computer file, message, image, or video is concealed within another file, message, image, or video.
-                        <Button variant="link" asChild className="p-1 text-base text-primary hover:text-primary/90 align-baseline">
+                        <Button variant="link" asChild className="p-1 text-base align-baseline">
                             <Link href="#">Read more</Link>
                         </Button>
                     </p>
@@ -54,11 +55,17 @@ export default function Home() {
             </main>
 
             <footer className="border-t border-border/20 mt-12 py-6">
-                <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                     <div className="flex items-center space-x-6">
-                        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Linkedin size={20} /></Link>
-                        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><TwitterIcon /></Link>
-                        <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Mail size={22} /></Link>
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-4">
+                    <div className="flex items-center space-x-4">
+                        <Link href="#" aria-label="LinkedIn" className="bg-primary hover:bg-primary/90 text-primary-foreground p-2 rounded-full transition-colors flex items-center justify-center">
+                            <Linkedin size={20} />
+                        </Link>
+                        <Link href="#" aria-label="Twitter" className="bg-primary hover:bg-primary/90 text-primary-foreground p-2 rounded-full transition-colors flex items-center justify-center">
+                            <TwitterIcon />
+                        </Link>
+                        <Link href="#" aria-label="Email" className="bg-destructive hover:bg-destructive/90 text-destructive-foreground p-2 rounded-full transition-colors flex items-center justify-center">
+                            <Mail size={20} />
+                        </Link>
                     </div>
                     <p className="text-sm text-muted-foreground">
                         © Copyrights 2024 - 2099 Steganography. All Rights Reserved.
