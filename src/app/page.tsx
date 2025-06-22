@@ -10,7 +10,7 @@ export default function Home() {
         <div className="bg-background text-foreground flex flex-col min-h-screen">
             <AppHeader />
             <main className="flex-grow flex flex-col items-center justify-center text-center p-4">
-                <h1 className="text-5xl sm:text-7xl font-bold text-destructive mb-8 font-serif tracking-wide">
+                <h1 className="text-4xl sm:text-6xl font-bold text-destructive mb-8 font-serif tracking-wide text-center">
                     Welcome to<br/>Steganography!
                 </h1>
                 <div className="max-w-3xl space-y-6 text-foreground text-lg">

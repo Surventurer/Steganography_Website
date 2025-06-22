@@ -13,7 +13,7 @@ export default function VideoSteganographyPage() {
             <AppHeader />
 
             <main className="flex-grow flex flex-col items-center p-4">
-                 <h1 className="text-5xl sm:text-7xl font-bold text-foreground mt-12 mb-8 font-serif tracking-wide text-center">
+                 <h1 className="text-4xl sm:text-6xl font-bold text-foreground mt-12 mb-8 font-serif tracking-wide text-center">
                     Video Steganography
                 </h1>
                 
