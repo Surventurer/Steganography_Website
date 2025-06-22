@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from 'next/image';
@@ -30,7 +31,7 @@ export default function ImageSteganographyPage() {
                         <DecodePanel className="h-full" />
                       </TabsContent>
                     </Tabs>
-                    <div className="flex items-center justify-center rounded-lg overflow-hidden shadow-[0_0_25px_3px_hsl(var(--primary)/0.4)]">
+                    <div className="flex items-center justify-center rounded-lg shadow-[0_0_25px_3px_hsl(var(--primary)/0.4)]">
                         <Image
                             src="/image-steganography.jpg"
                             alt="Steganography process illustration"
