@@ -20,7 +20,7 @@ export function AppFooter() {
                         <Mail size={20} />
                     </Link>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground text-center">
                     © Copyrights 2024 - 2099 Steganography. All Rights Reserved.
                 </p>
             </div>
