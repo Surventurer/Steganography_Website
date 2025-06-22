@@ -10,13 +10,13 @@ export function AppFooter() {
         <footer className="border-t border-border/20 mt-12 py-6">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-4">
                 <div className="flex items-center space-x-4">
-                    <Link href="https://www.linkedin.com/in/abhinav-rajpati-551544250/" aria-label="LinkedIn" className="bg-[#0077B5] hover:bg-[#0077B5]/90 text-white p-2 rounded-full transition-colors flex items-center justify-center">
+                    <Link href="https://www.linkedin.com/in/abhinav-rajpati-551544250/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="bg-[#0077B5] hover:bg-[#0077B5]/90 text-white p-2 rounded-full transition-colors flex items-center justify-center">
                         <Linkedin size={20} />
                     </Link>
-                    <Link href="https://github.com/Surventurer" aria-label="GitHub" className="bg-[#333] hover:bg-[#333]/90 text-white p-2 rounded-full transition-colors flex items-center justify-center">
+                    <Link href="https://github.com/Surventurer" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="bg-[#333] hover:bg-[#333]/90 text-white p-2 rounded-full transition-colors flex items-center justify-center">
                         <GithubIcon />
                     </Link>
-                    <Link href="abhinavrajpati3344@gmail.com" aria-label="Email" className="bg-[#EA4335] hover:bg-[#EA4335]/90 text-white p-2 rounded-full transition-colors flex items-center justify-center">
+                    <Link href="mailto:abhinavrajpati3344@gmail.com" aria-label="Email" className="bg-[#EA4335] hover:bg-[#EA4335]/90 text-white p-2 rounded-full transition-colors flex items-center justify-center">
                         <Mail size={20} />
                     </Link>
                 </div>
