@@ -31,13 +31,13 @@ export default function TextSteganographyPage() {
                         <TextDecodePanel className="h-full" />
                       </TabsContent>
                     </Tabs>
-                    <div className="flex items-center justify-center rounded-lg shadow-[0_0_25px_3px_hsl(var(--primary)/0.4)]">
+                    <div className="flex items-center justify-center">
                         <Image
                             src="/text-steganography.jpg"
                             alt="Text steganography illustration"
                             width={400}
                             height={400}
-                            className="object-cover rounded-md"
+                            className="object-cover rounded-md shadow-[0_0_25px_3px_hsl(var(--primary)/0.4)]"
                             data-ai-hint="text document"
                         />
                     </div>
