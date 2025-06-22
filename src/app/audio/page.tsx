@@ -32,7 +32,7 @@ export default function AudioSteganographyPage() {
                     </Tabs>
                     <div className="relative rounded-lg shadow-xl overflow-hidden min-h-[500px]">
                         <Image
-                            src="/audio-steganography.png"
+                            src="/audio-steganography.jpg"
                             alt="Audio steganography illustration"
                             fill
                             className="object-cover"

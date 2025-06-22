@@ -32,7 +32,7 @@ export default function ImageSteganographyPage() {
                     </Tabs>
                     <div className="relative rounded-lg shadow-xl overflow-hidden min-h-[500px]">
                         <Image
-                            src="/image-steganography.png"
+                            src="/image-steganography.jpg"
                             alt="Steganography process illustration"
                             fill
                             className="object-cover"

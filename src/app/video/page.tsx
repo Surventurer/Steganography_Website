@@ -32,7 +32,7 @@ export default function VideoSteganographyPage() {
                     </Tabs>
                     <div className="relative rounded-lg shadow-xl overflow-hidden min-h-[500px]">
                         <Image
-                            src="/video-steganography.png"
+                            src="/video-steganography.jpg"
                             alt="Video steganography illustration"
                             fill
                             className="object-cover"
