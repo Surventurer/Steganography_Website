@@ -63,8 +63,8 @@ export function AppHeader() {
                 <div className="md:hidden">
                     <Sheet>
                         <SheetTrigger asChild>
-                            <Button variant="ghost" size="icon" className="w-16 h-16">
-                                <Menu className="h-10 w-10" />
+                            <Button variant="ghost" size="icon" className="w-14 h-14">
+                                <Menu className="h-8 w-8" />
                                 <span className="sr-only">Open menu</span>
                             </Button>
                         </SheetTrigger>
