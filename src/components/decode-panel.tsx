@@ -9,6 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { decodeMessage } from '@/lib/steganography';
 import { FileWarning, Terminal, Search } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const MagnifyingGlass = () => (
   <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-md z-10">
@@ -19,7 +20,7 @@ const MagnifyingGlass = () => (
   </div>
 );
 
-export function DecodePanel() {
+export function DecodePanel({ className }: { className?: string }) {
   const { toast } = useToast();
   const [image, setImage] = useState<string | null>(null);
   const [decodedMessage, setDecodedMessage] = useState<string | null>(null);
@@ -97,44 +98,46 @@ export function DecodePanel() {
 
 
   return (
-    <Card className="w-full border-2 border-primary/20 shadow-lg">
+    <Card className={cn("w-full border-2 border-primary/20 shadow-lg flex flex-col", className)}>
       <CardHeader>
         <CardTitle>Decode a Message</CardTitle>
         <CardDescription>Upload an image to reveal its hidden secret.</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 flex-grow flex flex-col">
         <div className="space-y-2">
           <Label htmlFor="image-decode-upload">Upload Image to Decode</Label>
           <Input id="image-decode-upload" type="file" accept="image/png, image/jpeg" onChange={handleImageChange} className="file:text-primary" />
         </div>
         
-        {image && (
-          <div className="relative w-full min-h-64 border rounded-md overflow-hidden flex items-center justify-center">
-            {isDecoding && <MagnifyingGlass />}
-            <Image src={image} alt="Upload for decoding" fill className="object-contain" data-ai-hint="magnifying glass abstract" />
-          </div>
-        )}
-        
-        {decodedMessage !== null && (
-          decodedMessage ? (
-            <Alert>
-              <Terminal className="h-4 w-4" />
-              <AlertTitle>Revealed Message</AlertTitle>
-              <AlertDescription className="font-code text-base mt-2 whitespace-pre-wrap">
-                {decodedMessage}
-              </AlertDescription>
-            </Alert>
-          ) : !isDecoding && (
-            <Alert variant="destructive">
-              <FileWarning className="h-4 w-4" />
-              <AlertTitle>No Message Found</AlertTitle>
-              <AlertDescription>
-                This image does not appear to contain a hidden message, or the data may be corrupted.
-              </AlertDescription>
-            </Alert>
-          )
-        )}
-        
+        <div className="flex-grow flex flex-col">
+          {image && (
+            <div className="relative w-full min-h-64 border rounded-md overflow-hidden flex items-center justify-center flex-grow">
+              {isDecoding && <MagnifyingGlass />}
+              <Image src={image} alt="Upload for decoding" fill className="object-contain" data-ai-hint="magnifying glass abstract" />
+            </div>
+          )}
+          
+          {decodedMessage !== null && (
+            decodedMessage ? (
+              <Alert className="mt-4">
+                <Terminal className="h-4 w-4" />
+                <AlertTitle>Revealed Message</AlertTitle>
+                <AlertDescription className="font-code text-base mt-2 whitespace-pre-wrap">
+                  {decodedMessage}
+                </AlertDescription>
+              </Alert>
+            ) : !isDecoding && (
+              <Alert variant="destructive" className="mt-4">
+                <FileWarning className="h-4 w-4" />
+                <AlertTitle>No Message Found</AlertTitle>
+                <AlertDescription>
+                  This image does not appear to contain a hidden message, or the data may be corrupted.
+                </AlertDescription>
+              </Alert>
+            )
+          )}
+        </div>
+
         <canvas ref={canvasRef} className="hidden" />
       </CardContent>
     </Card>

@@ -10,8 +10,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { encodeMessage } from '@/lib/steganography';
 import { Upload, Download, Loader2, Pencil } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-export function EncodePanel() {
+export function EncodePanel({ className }: { className?: string }) {
   const { toast } = useToast();
   const [image, setImage] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -93,13 +94,13 @@ export function EncodePanel() {
   };
 
   return (
-    <Card className="w-full border-2 border-primary/20 shadow-lg">
+    <Card className={cn("w-full border-2 border-primary/20 shadow-lg flex flex-col", className)}>
       <CardHeader>
         <CardTitle>Encode a Message</CardTitle>
         <CardDescription>Hide your secret message inside an image.</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-4">
+      <CardContent className="space-y-6 flex-grow flex flex-col">
+        <div className="space-y-4 flex-grow flex flex-col">
           <div className="space-y-2">
             <Label htmlFor="image-upload" className="flex items-center gap-2">
               <Upload className="w-4 h-4" /> 1. Upload Cover Image
@@ -111,7 +112,7 @@ export function EncodePanel() {
               <Image src={image} alt="Upload preview" fill className="object-contain" data-ai-hint="image upload" />
             </div>
           )}
-          <div className="space-y-2">
+          <div className="space-y-2 flex-grow flex flex-col">
             <Label htmlFor="secret-message" className="flex items-center gap-2">
               <Pencil className="w-4 h-4" /> 2. Enter Secret Message
             </Label>
@@ -120,11 +121,11 @@ export function EncodePanel() {
               placeholder="Your secret goes here..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="min-h-[100px]"
+              className="min-h-[100px] flex-grow"
             />
           </div>
         </div>
-        <Button onClick={handleEncode} disabled={isEncoding || !image || !message} className="w-full text-lg py-6">
+        <Button onClick={handleEncode} disabled={isEncoding || !image || !message} className="w-full text-lg py-6 mt-auto">
           {isEncoding ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
           Encode & Download Image
         </Button>

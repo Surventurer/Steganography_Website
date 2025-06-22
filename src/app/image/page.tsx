@@ -17,26 +17,25 @@ export default function ImageSteganographyPage() {
                     Image Steganography
                 </h1>
                 
-                <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                    <Tabs defaultValue="encode" className="w-full">
-                      <TabsList className="grid w-full grid-cols-2 mb-4">
+                <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                    <Tabs defaultValue="encode" className="w-full flex flex-col">
+                      <TabsList className="grid w-full grid-cols-2 mb-4 shrink-0">
                         <TabsTrigger value="encode">Encode</TabsTrigger>
                         <TabsTrigger value="decode">Decode</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="encode">
-                        <EncodePanel />
+                      <TabsContent value="encode" className="flex-grow">
+                        <EncodePanel className="h-full" />
                       </TabsContent>
-                      <TabsContent value="decode">
-                        <DecodePanel />
+                      <TabsContent value="decode" className="flex-grow">
+                        <DecodePanel className="h-full" />
                       </TabsContent>
                     </Tabs>
-                    <div className="flex items-center justify-center p-4">
+                    <div className="relative rounded-lg shadow-xl overflow-hidden">
                         <Image
                             src="https://placehold.co/500x500.png"
                             alt="Steganography process illustration"
-                            width={500}
-                            height={500}
-                            className="rounded-lg shadow-xl object-cover"
+                            fill
+                            className="object-cover"
                             data-ai-hint="digital security"
                         />
                     </div>
