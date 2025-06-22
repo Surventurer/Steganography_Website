@@ -20,6 +20,7 @@ export function AppHeader() {
 
     const getIsActive = (item: string) => {
         if (item === 'HOME') return pathname === '/';
+        if (item === 'DEEP DRIVE') return false; // This link doesn't have an active state
         return pathname.startsWith(`/${item.toLowerCase()}`);
     }
 
@@ -28,16 +29,30 @@ export function AppHeader() {
             <nav className="flex items-center justify-between">
                 <Logo />
                 <div className="hidden md:flex items-center space-x-1">
-                    {navItems.map((item) => (
-                        <Button
-                            key={item}
-                            variant={getIsActive(item) ? 'default' : 'ghost'}
-                            asChild
-                            size="sm"
-                        >
-                            <Link href={item === 'HOME' ? '/' : `/${item.toLowerCase()}`}>{item}</Link>
-                        </Button>
-                    ))}
+                    {navItems.map((item) => {
+                        if (item === 'DEEP DRIVE') {
+                            return (
+                                <Button
+                                    key={item}
+                                    variant="ghost"
+                                    asChild
+                                    size="sm"
+                                >
+                                    <a href="/deep-drive.pdf" target="_blank" rel="noopener noreferrer">DEEP DRIVE</a>
+                                </Button>
+                            );
+                        }
+                        return (
+                            <Button
+                                key={item}
+                                variant={getIsActive(item) ? 'default' : 'ghost'}
+                                asChild
+                                size="sm"
+                            >
+                                <Link href={item === 'HOME' ? '/' : `/${item.toLowerCase()}`}>{item}</Link>
+                            </Button>
+                        )
+                    })}
                 </div>
             </nav>
         </header>
