@@ -11,7 +11,7 @@ export default function Home() {
             <AppHeader />
             <main className="flex-grow flex flex-col items-center justify-center text-center p-4">
                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-destructive mb-8 font-serif text-center break-words">
-                    Welcome to<br/>Steganography!
+                    Welcome to Steganography!
                 </h1>
                 <div className="max-w-3xl space-y-6 text-foreground text-lg">
                     <p>
