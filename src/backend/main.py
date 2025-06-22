@@ -76,7 +76,7 @@ def decode_image():
             return jsonify({"error": "No selected file."}), 400
             
         if file and allowed_file(file.filename):
-            try:
+            try:  
                 image = Image.open(file.stream)
             except Exception as e:
                 return jsonify({"error": f"Invalid image file: {e}"}), 400
