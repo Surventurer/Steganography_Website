@@ -30,7 +30,7 @@ export default function ImageSteganographyPage() {
                         <DecodePanel />
                       </TabsContent>
                     </Tabs>
-                    <div className="hidden lg:flex items-center justify-center p-4">
+                    <div className="flex items-center justify-center p-4">
                         <Image
                             src="https://placehold.co/500x500.png"
                             alt="Steganography process illustration"
