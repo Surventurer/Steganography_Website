@@ -14,7 +14,7 @@ export default function AudioSteganographyPage() {
             <AppHeader />
 
             <main className="flex-grow flex flex-col items-center p-4">
-                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-foreground mt-12 mb-8 font-serif tracking-wide text-center break-words">
+                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-foreground mt-4 mb-8 font-serif tracking-wide text-center break-words">
                     Audio Steganography
                 </h1>
                 
