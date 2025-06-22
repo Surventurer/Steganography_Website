@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,17 +8,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { encodeMessage } from '@/lib/steganography';
 import { Upload, Download, Loader2, Pencil } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function EncodePanel({ className }: { className?: string }) {
   const { toast } = useToast();
-  const [image, setImage] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [message, setMessage] = useState('');
   const [isEncoding, setIsEncoding] = useState(false);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -26,14 +24,14 @@ export function EncodePanel({ className }: { className?: string }) {
       setImageFile(file);
       const reader = new FileReader();
       reader.onload = (event) => {
-        setImage(event.target?.result as string);
+        setImagePreview(event.target?.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
   
-  const handleEncode = () => {
-    if (!imageFile || !message || !canvasRef.current) {
+  const handleEncode = async () => {
+    if (!imageFile || !message) {
       toast({
         variant: 'destructive',
         title: 'Missing Information',
@@ -43,53 +41,45 @@ export function EncodePanel({ className }: { className?: string }) {
     }
     
     setIsEncoding(true);
+
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    formData.append('message', message);
     
-    const img = new window.Image();
-    img.src = image as string;
-    img.onload = () => {
-      const canvas = canvasRef.current!;
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext('2d', { willReadFrequently: true });
-      if (!ctx) {
-        toast({ variant: "destructive", title: "Error", description: "Could not get canvas context." });
-        setIsEncoding(false);
-        return;
-      }
-      ctx.drawImage(img, 0, 0);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      
-      const encodedImageData = encodeMessage(imageData, message);
-      
-      if (!encodedImageData) {
-        toast({
-          variant: 'destructive',
-          title: 'Encoding Failed',
-          description: 'The message is too long for the selected image.',
-        });
-        setIsEncoding(false);
-        return;
+    try {
+      const response = await fetch('/api/image/encode', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorResult = await response.json();
+        throw new Error(errorResult.error || 'Failed to encode image.');
       }
       
-      ctx.putImageData(encodedImageData, 0, 0);
-      const dataUrl = canvas.toDataURL('image/png');
-      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'encoded-image.png';
+      link.href = url;
+      link.download = `encoded-${imageFile.name}.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
       
       toast({
         title: 'Success!',
         description: 'Your image has been encoded and download has started.',
       });
+
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Encoding Failed',
+        description: error.message || 'An unexpected error occurred.',
+      });
+    } finally {
       setIsEncoding(false);
-    };
-    img.onerror = () => {
-        toast({ variant: 'destructive', title: 'Error', description: 'Failed to load image for encoding.' });
-        setIsEncoding(false);
     }
   };
 
@@ -105,11 +95,11 @@ export function EncodePanel({ className }: { className?: string }) {
             <Label htmlFor="image-upload" className="flex items-center gap-2">
               <Upload className="w-4 h-4" /> 1. Upload Cover Image
             </Label>
-            <Input id="image-upload" type="file" accept="image/png, image/jpeg" onChange={handleImageChange} className="file:text-primary" />
+            <Input id="image-upload" type="file" accept="image/png, image/jpeg, image/jpg, image/tiff" onChange={handleImageChange} className="file:text-primary" />
           </div>
-          {image && (
+          {imagePreview && (
             <div className="relative w-full h-48 border rounded-md overflow-hidden">
-              <Image src={image} alt="Upload preview" fill className="object-contain" data-ai-hint="image upload" />
+              <Image src={imagePreview} alt="Upload preview" fill className="object-contain" data-ai-hint="image upload" />
             </div>
           )}
           <div className="space-y-2 flex-grow flex flex-col">
@@ -125,11 +115,10 @@ export function EncodePanel({ className }: { className?: string }) {
             />
           </div>
         </div>
-        <Button onClick={handleEncode} disabled={isEncoding || !image || !message} className="w-full text-lg py-6 mt-auto">
+        <Button onClick={handleEncode} disabled={isEncoding || !imageFile || !message} className="w-full text-lg py-6 mt-auto">
           {isEncoding ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Download className="mr-2 h-4 w-4" />}
           Encode & Download Image
         </Button>
-        <canvas ref={canvasRef} className="hidden" />
       </CardContent>
     </Card>
   );
