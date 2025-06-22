@@ -14,7 +14,7 @@ export default function VideoSteganographyPage() {
             <AppHeader />
 
             <main className="flex-grow flex flex-col items-center p-4">
-                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-foreground mt-4 mb-8 font-serif tracking-wide text-center break-words">
+                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-foreground mt-4 mb-8 font-serif text-center break-words">
                     Video Steganography
                 </h1>
                 
@@ -31,7 +31,7 @@ export default function VideoSteganographyPage() {
                         <VideoDecodePanel className="h-full" />
                       </TabsContent>
                     </Tabs>
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center p-4">
                         <Image
                             src="/video-steganography.jpg"
                             alt="Video steganography illustration"
