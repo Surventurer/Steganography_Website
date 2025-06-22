@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { encodeMessage } from '@/lib/steganography';
-import { Upload, Download, Loader2 } from 'lucide-react';
+import { Upload, Download, Loader2, Pencil } from 'lucide-react';
 
 export function EncodePanel() {
   const { toast } = useToast();
@@ -112,7 +112,9 @@ export function EncodePanel() {
             </div>
           )}
           <div className="space-y-2">
-            <Label htmlFor="secret-message">2. Enter Secret Message</Label>
+            <Label htmlFor="secret-message" className="flex items-center gap-2">
+              <Pencil className="w-4 h-4" /> 2. Enter Secret Message
+            </Label>
             <Textarea
               id="secret-message"
               placeholder="Your secret goes here..."
