@@ -30,12 +30,13 @@ export default function VideoSteganographyPage() {
                         <VideoDecodePanel className="h-full" />
                       </TabsContent>
                     </Tabs>
-                    <div className="relative rounded-lg shadow-xl overflow-hidden min-h-[500px]">
+                    <div className="flex items-center justify-center rounded-lg shadow-xl overflow-hidden">
                         <Image
                             src="/video-steganography.jpg"
                             alt="Video steganography illustration"
-                            fill
-                            className="object-cover"
+                            width={400}
+                            height={400}
+                            className="object-cover rounded-md"
                             data-ai-hint="video reel film"
                         />
                     </div>
