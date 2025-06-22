@@ -17,17 +17,17 @@ export default function VideoSteganographyPage() {
                     Video Steganography
                 </h1>
                 
-                <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                    <Tabs defaultValue="encode" className="w-full">
-                      <TabsList className="grid w-full grid-cols-2 mb-4">
+                <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                    <Tabs defaultValue="encode" className="w-full flex flex-col">
+                      <TabsList className="grid w-full grid-cols-2 mb-4 shrink-0">
                         <TabsTrigger value="encode">Encode</TabsTrigger>
                         <TabsTrigger value="decode">Decode</TabsTrigger>
                       </TabsList>
-                      <TabsContent value="encode">
-                        <VideoEncodePanel />
+                      <TabsContent value="encode" className="flex-grow">
+                        <VideoEncodePanel className="h-full" />
                       </TabsContent>
-                      <TabsContent value="decode">
-                        <VideoDecodePanel />
+                      <TabsContent value="decode" className="flex-grow">
+                        <VideoDecodePanel className="h-full" />
                       </TabsContent>
                     </Tabs>
                     <div className="relative rounded-lg shadow-xl overflow-hidden min-h-[500px]">
