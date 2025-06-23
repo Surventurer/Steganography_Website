@@ -4,6 +4,7 @@ import traceback
 from flask import Flask, request, send_file, jsonify
 from PIL import Image
 from stegano import lsb, exifHeader
+from text_steganography import TextSteganography
 
 app = Flask(__name__)
 
@@ -138,9 +139,179 @@ def decode_image():
 
 
 @app.route("/")
-def hello_world():
-    return {"message": "Hello welcome to Steganography Website API"}
+def home():
+    """API information endpoint"""
+    return jsonify({
+        "message": "Text Steganography API - Original Algorithm",
+        "version": "1.0",
+        "endpoints": {
+            "/check-capacity": "POST - Check cover text capacity",
+            "/encode": "POST - Encode secret message into cover text",
+            "/decode": "POST - Decode hidden message from steganographic text",
+            "/info": "GET - Get API usage information"
+        }
+    })
 
+@app.route('/info', methods=['GET'])
+def info():
+    """Get information about the API usage"""
+    return jsonify({
+        "api_name": "Text Steganography API",
+        "description": "Hide and reveal secret messages in plain text using zero-width characters",
+        "algorithm": "Original steganography algorithm preserved",
+        "encoding": {
+            "step1": "/check-capacity - Check cover text capacity first",
+            "step2": "/encode - Encode secret message into cover text",
+            "method": "POST",
+            "workflow": "First check capacity, then encode based on returned limits"
+        },
+        "decoding": {
+            "endpoint": "/decode", 
+            "method": "POST",
+            "required_fields": ["stego_text"],
+            "description": "Extracts hidden message from steganographic text"
+        },
+        "capacity_rule": "Maximum characters = floor(word_count / 6)",
+        "supported_characters": "ASCII characters 32-127"
+    })
+
+"""Text Steganography"""
+steg = TextSteganography()
+
+@app.route('/api/text/check-capacity', methods=['POST'])
+def check_capacity():
+    """Check cover text capacity - Step 1"""
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                "success": False,
+                "error": "No JSON data provided"
+            }), 400
+        
+        cover_text = data.get('cover_text', '').strip()
+        
+        if not cover_text:
+            return jsonify({
+                "success": False,
+                "error": "cover_text is required"
+            }), 400
+        
+        # Count words exactly like original
+        words = []
+        for line in cover_text.split('\n'): 
+            words += line.split()
+        
+        word_count = len(words)
+        bt = int(word_count)
+        max_display = int(bt/6)
+        
+        return jsonify({
+            # "success": True,
+            # "cover_text_length": len(cover_text),
+            # "word_count": word_count,
+            # "max_characters_display": max_display,
+            "actual_max_characters": bt,
+            # "message": f"Maximum number of characters that can be inserted: {max_display}",
+            # "note": f"Actual encoding capacity: {bt} characters",
+            # "next_step": "Use /encode endpoint with secret_message up to the capacity limit"
+        }), 200
+            
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Server error: {str(e)}"
+        }), 500
+
+@app.route('/api/text/encode', methods=['POST'])
+def encode():
+    """Encode secret message into cover text"""
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                "success": False,
+                "error": "No JSON data provided"
+            }), 400
+        
+        cover_text = data.get('cover_text', '').strip()
+        secret_message = data.get('secret_message', '').strip()
+        
+        if not cover_text:
+            return jsonify({
+                "success": False,
+                "error": "cover_text is required"
+            }), 400
+        
+        if not secret_message:
+            return jsonify({
+                "success": False,
+                "error": "secret_message is required"  
+            }), 400
+        
+        # Perform encoding using original algorithm
+        result = steg.encode_message(cover_text, secret_message)
+        
+        if result["success"]:
+            return jsonify(result), 200
+        else:
+            return jsonify(result), 400
+            
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Server error: {str(e)}"
+        }), 500
+
+@app.route('/api/text/decode', methods=['POST'])
+def decode():
+    """Decode hidden message from steganographic text"""
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                "success": False,
+                "error": "No JSON data provided"
+            }), 400
+        
+        stego_text = data.get('stego_text', '').strip()
+        
+        if not stego_text:
+            return jsonify({
+                "success": False,
+                "error": "stego_text is required"
+            }), 400
+        
+        # Perform decoding using original algorithm
+        result = steg.decode_message(stego_text)
+        
+        if result["success"]:
+            return jsonify(result), 200
+        else:
+            return jsonify(result), 400
+            
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": f"Server error: {str(e)}"
+        }), 500
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        "success": False,
+        "error": "Endpoint not found"
+    }), 404
+
+@app.errorhandler(405)
+def method_not_allowed(error):
+    return jsonify({
+        "success": False,
+        "error": "Method not allowed"
+    }), 405
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080, debug=True)

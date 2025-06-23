@@ -9,5 +9,6 @@ dependencies = [
     "gunicorn>=22.0.0",
     "opencv-python-headless>=4.11.0.86",
     "pillow>=10.0.0",
+    "requests>=2.32.4",
     "stegano>=0.11.0",
 ]
