@@ -7,7 +7,7 @@ from stegano import lsb, exifHeader
 
 app = Flask(__name__)
 
-ALLOWED_EXTENSIONS = {'png', 'jpeg', 'jpg', 'tiff', 'jfif', 'pjp', 'pjep','tif'}
+ALLOWED_EXTENSIONS = {'png', 'jpeg', 'jpg', 'tiff', 'jfif', 'pjp', 'pjpeg', 'tif'}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -35,7 +35,7 @@ def encode_image():
         # Open the image
         image = Image.open(file.stream)
 
-        # Encode based on extension
+        # Encode for LSB-compatible formats
         if ext in ['png', 'tiff', 'tif']:
             if image.mode != 'RGB':
                 image = image.convert('RGB')
@@ -43,8 +43,8 @@ def encode_image():
             try:
                 secret_image = lsb.hide(image, message)
                 buffer = io.BytesIO()
-                format_used = 'TIFF' if ext == 'tiff' else 'PNG'
-                mimetype = 'image/tiff' if ext == 'tiff' else 'image/png'
+                format_used = 'TIFF' if ext in ['tiff', 'tif'] else 'PNG'
+                mimetype = 'image/tiff' if ext in ['tiff', 'tif'] else 'image/png'
                 download_name = f"encoded_image.{ext}"
 
                 secret_image.save(buffer, format=format_used)
@@ -57,23 +57,24 @@ def encode_image():
                 traceback.print_exc()
                 return jsonify({"error": f"Failed to encode message: {e}"}), 500
 
-        elif ext in ['jpg', 'jpeg','jfif', 'pjp', 'pjep']:
+        # Encode for JPEG-based formats
+        elif ext in ['jpg', 'jpeg', 'jfif', 'pjp', 'pjpeg']:
             try:
-                # Save input to disk temporarily because exifHeader requires a path
-                temp_input_path = f"/tmp/input_image.{ext}"
-                temp_output_path = f"/tmp/output_image.{ext}"
-                file.stream.seek(0)
-                with open(temp_input_path, 'wb') as f:
-                    f.write(file.read())
-                print(temp_input_path,temp_output_path)
+                # Convert to valid JPEG
+                image = image.convert("RGB")
+                temp_input_path = "/tmp/input_cleaned.jpg"
+                temp_output_path = "/tmp/output_image.jpg"
 
+                image.save(temp_input_path, "JPEG")
+
+                # Embed message using exifHeader
                 exifHeader.hide(temp_input_path, temp_output_path, secret_message=message)
 
                 return send_file(
                     temp_output_path,
                     mimetype='image/jpeg',
                     as_attachment=True,
-                    download_name=f"encoded_image.{ext}"
+                    download_name="encoded_image.jpg"
                 )
             except Exception as e:
                 traceback.print_exc()
@@ -136,9 +137,9 @@ def decode_image():
         return jsonify({"error": f"An unexpected error occurred: {e}"}), 500
 
 
-@app.route("/api/hello")
+@app.route("/")
 def hello_world():
-    return {"message": "Hello from your Python backend!"}
+    return {"message": "Hello welcome to Steganography Website API"}
 
 
 if __name__ == "__main__":
