@@ -11,7 +11,7 @@ import { Menu } from 'lucide-react';
 const Logo = () => (
     <Link href="/" className="flex items-center space-x-2" aria-label="Steganography Home">
         <div className="relative w-14 h-14">
-            <Image src="/Steganography_Website logo.png" alt="Steganography Logo" fill className="object-contain" />
+            <Image src="/Steganography_Website logo.png" alt="Steganography Logo" fill sizes="56px" priority className="object-contain" />
         </div>
     </Link>
 );
