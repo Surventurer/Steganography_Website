@@ -6,8 +6,8 @@ class TextSteganography:
         # Reverse mapping for decoding - exactly as in original
         self.ZWC_reverse = {u'\u200C':"00",u'\u202C':"01",u'\u202D':"11",u'\u200E':"10"}
     
-    def txt_encode(self, text, words):
-        """Original txt_encode function - unchanged logic"""
+    def txt_encode(self, text, cover_text):
+        """Original txt_encode function - preserving original formatting"""
         l = len(text)
         i = 0
         add = ''
@@ -26,34 +26,61 @@ class TextSteganography:
             i += 1
         
         res1 = add + "111111111111"
-        HM_SK = ""
         
-        # Original encoding logic - exactly as your code
-        result_text = ""
-        i = 0
-        while(i < len(res1)):  
-            if int(i/12) >= len(words):
-                break
-            s = words[int(i/12)]
-            j = 0
-            x = ""
-            HM_SK = ""
-            while(j < 12):
-                if i + j + 1 < len(res1):
-                    x = res1[j + i] + res1[i + j + 1]
-                    HM_SK += self.ZWC[x]
-                j += 2
-            s1 = s + HM_SK
-            result_text += s1 + " "  # Add space after each word like original
-            i += 12
+        # Split cover text into words while preserving structure
+        words = []
+        lines = cover_text.split('\n')
+        for line in lines: 
+            words += line.split()
         
-        # Add remaining words - original logic
-        t = int(len(res1)/12)     
-        while t < len(words): 
-            result_text += words[t] + " "  # Add space after each word like original
-            t += 1
+        # Create word-to-position mapping to preserve formatting
+        word_positions = []
+        word_index = 0
+        result_lines = []
         
-        return result_text.strip()  # Remove trailing space
+        for line_idx, line in enumerate(lines):
+            line_words = line.split()
+            if not line_words:  # Empty line
+                result_lines.append("")
+                continue
+                
+            line_result = []
+            spaces_before = []
+            
+            # Find original spacing
+            remaining_line = line
+            for word in line_words:
+                word_pos = remaining_line.find(word)
+                spaces_before.append(remaining_line[:word_pos])
+                remaining_line = remaining_line[word_pos + len(word):]
+            spaces_before.append(remaining_line)  # Trailing spaces
+            
+            # Process each word in the line
+            for word_pos, word in enumerate(line_words):
+                # Add the hidden data to words if available
+                s1 = word
+                if word_index < len(words):
+                    # Calculate if this word should have hidden data
+                    bit_index = word_index * 12
+                    if bit_index < len(res1):
+                        j = 0
+                        HM_SK = ""
+                        while(j < 12):
+                            if bit_index + j + 1 < len(res1):
+                                x = res1[bit_index + j] + res1[bit_index + j + 1]
+                                HM_SK += self.ZWC[x]
+                            j += 2
+                        s1 = word + HM_SK
+                
+                # Add word with original spacing
+                line_result.append(spaces_before[word_pos] + s1)
+                word_index += 1
+            
+            # Add trailing spaces/content
+            line_result.append(spaces_before[-1])
+            result_lines.append(''.join(line_result))
+        
+        return '\n'.join(result_lines)
     
     def encode_message(self, cover_text, secret_message):
         """Encode secret message into cover text - preserving original capacity calculation"""
@@ -79,8 +106,8 @@ class TextSteganography:
                     "cover_word_count": word_count
                 }
             
-            # Use original encoding function
-            stego_text = self.txt_encode(secret_message, words)
+            # Use original encoding function with cover text
+            stego_text = self.txt_encode(secret_message, cover_text)
             
             return {
                 "success": True,

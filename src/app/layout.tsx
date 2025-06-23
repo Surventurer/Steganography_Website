@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Steganography',
-  description: 'Create and decode messages hidden in plain sight using steganography.',
+  title: 'Steganography Website',
+  description: 'Create and decode messages hidden in text, image, audio, vedio using steganography.',
 };
 
 export default function RootLayout({
