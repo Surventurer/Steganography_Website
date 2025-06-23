@@ -61,7 +61,7 @@ export function EncodePanel({ className }: { className?: string }) {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `encoded-${imageFile.name}.png`;
+      link.download = `encoded-${imageFile.name}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

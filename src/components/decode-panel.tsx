@@ -111,7 +111,7 @@ export function DecodePanel({ className }: { className?: string }) {
             <Alert className="mt-4">
               <Terminal className="h-4 w-4" />
               <AlertTitle>Revealed Message</AlertTitle>
-              <AlertDescription className="font-code text-base mt-2 whitespace-pre-wrap">
+              <AlertDescription className="font-code text-base mt-2 whitespace-pre-wrap break-words">
                 {decodedMessage}
               </AlertDescription>
             </Alert>
