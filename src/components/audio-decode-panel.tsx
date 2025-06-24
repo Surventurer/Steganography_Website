@@ -6,10 +6,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
-import { Terminal, Search, Music } from 'lucide-react';
+import { Terminal, Search, Music, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/button';
-import { Loader2 } from 'lucide-react';
+
+// Interface to match the backend JSON response
+interface DecodeResponse {
+  message?: string | null;
+  error?: string;
+}
 
 export function AudioDecodePanel({ className }: { className?: string }) {
   const { toast } = useToast();
@@ -20,11 +25,11 @@ export function AudioDecodePanel({ className }: { className?: string }) {
   const handleAudioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setAudioFile(e.target.files[0]);
-      setDecodedMessage(null);
+      setDecodedMessage(null); // Reset on new file selection
     }
   };
 
-  const handleDecode = () => {
+  const handleDecode = async () => {
     if (!audioFile) {
       toast({
         variant: 'destructive',
@@ -37,12 +42,53 @@ export function AudioDecodePanel({ className }: { className?: string }) {
     setIsDecoding(true);
     setDecodedMessage(null);
 
-    // Placeholder for future Python integration
-    setTimeout(() => {
-        setDecodedMessage("This is a placeholder for the revealed message from audio.");
-        toast({ title: 'Success!', description: 'A secret message was found (placeholder).' });
-        setIsDecoding(false);
-    }, 1000);
+    const formData = new FormData();
+    formData.append('audio_file', audioFile);
+
+    try {
+      const response = await fetch('/api/audio/decode', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result: DecodeResponse = await response.json();
+
+      if (response.ok) {
+        if (result.message) {
+          setDecodedMessage(result.message);
+          toast({
+            title: 'Success!',
+            description: 'A secret message was found in the audio file.',
+          });
+        } else {
+          // Handles the case where the backend successfully checks but finds no message
+          setDecodedMessage(result.error || 'No hidden message was found.');
+          toast({
+            variant: 'default',
+            title: 'No Message Found',
+            description: result.error || 'The audio file does not seem to contain a hidden message.',
+          });
+        }
+      } else {
+        // Handles HTTP errors like 400, 500 from the backend
+        setDecodedMessage(`Error: ${result.error || 'An unknown error occurred.'}`);
+        toast({
+          variant: 'destructive',
+          title: 'Decoding Failed',
+          description: result.error || 'Could not decode the audio file.',
+        });
+      }
+    } catch (error) {
+      // Handles network errors (e.g., server is down)
+      setDecodedMessage('Error: Failed to connect to the server.');
+      toast({
+        variant: 'destructive',
+        title: 'Network Error',
+        description: 'Failed to connect to the server. Please check your connection.',
+      });
+    } finally {
+      setIsDecoding(false);
+    }
   };
 
   return (
@@ -65,7 +111,7 @@ export function AudioDecodePanel({ className }: { className?: string }) {
         {decodedMessage !== null && (
           <Alert className="mt-4">
             <Terminal className="h-4 w-4" />
-            <AlertTitle>Revealed Message</AlertTitle>
+            <AlertTitle>Revealed Content</AlertTitle>
             <AlertDescription className="font-code text-base mt-2 whitespace-pre-wrap">
               {decodedMessage}
             </AlertDescription>

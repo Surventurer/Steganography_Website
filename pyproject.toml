@@ -9,6 +9,8 @@ dependencies = [
     "gunicorn>=22.0.0",
     "opencv-python-headless>=4.11.0.86",
     "pillow>=10.0.0",
+    "pycryptodome>=3.23.0",
     "requests>=2.32.4",
+    "scipy>=1.16.0",
     "stegano>=0.11.0",
 ]

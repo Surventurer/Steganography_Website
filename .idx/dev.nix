@@ -8,7 +8,7 @@
     pkgs.nodejs_20
     pkgs.zulu
     pkgs.uv
-    pkgs.apt
+    pkgs.ffmpeg-full.bin
   ];
   # Sets environment variables in the workspace
   env = {};
