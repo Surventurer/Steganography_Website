@@ -332,7 +332,7 @@ audio_steg = AudioSteganography()
 # Configure upload settings
 TEMP_OUTPUT_FOLDER = os.path.join(tempfile.gettempdir(), 'stego_outputs')
 os.makedirs(TEMP_OUTPUT_FOLDER, exist_ok=True)
-ALLOWED_AUDIO_EXTENSIONS = {'wav', 'mp3', 'flac', 'ogg', 'm4a', 'aac'}
+ALLOWED_AUDIO_EXTENSIONS = {'wav', 'mp3', 'flac', 'ogg', 'm4a', 'aac',"awb"}
 
 def get_file_extension(filename):
     return filename.rsplit('.', 1)[1].lower() if '.' in filename else ''
