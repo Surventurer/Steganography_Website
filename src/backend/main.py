@@ -299,6 +299,8 @@ def decode():
             "error": f"Server error: {str(e)}"
         }), 500
 
+"""Audio Steganography"""
+
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
