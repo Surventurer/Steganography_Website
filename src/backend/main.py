@@ -163,41 +163,64 @@ def decode_image():
         return jsonify({"error": f"An unexpected error occurred: {e}"}), 500
 
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def home():
-    """API information endpoint"""
+    """API Home Endpoint
+    Provides a brief overview of the API and its available endpoints.
+    """
     return jsonify({
-        "message": "Text Steganography API - Original Algorithm",
+        "message": "Welcome to the Steganography Website API!",
         "version": "1.0",
         "endpoints": {
-            "/check-capacity": "POST - Check cover text capacity",
-            "/encode": "POST - Encode secret message into cover text",
-            "/decode": "POST - Decode hidden message from steganographic text",
-            "/info": "GET - Get API usage information"
+            "/api/image/encode": "POST - Encode a message into an image",
+            "/api/image/decode": "POST - Decode a message from an image",
+            "/api/text/check-capacity": "POST - Check text capacity for steganography",
+            "/api/text/encode": "POST - Encode a message into text",
+            "/api/text/decode": "POST - Decode a message from text",
+            "/api/audio/check-capacity": "POST - Check audio capacity for steganography",
+            "/api/audio/encode": "POST - Encode a message into audio",
+            "/api/audio/decode": "POST - Decode a message from audio",
+            "/api/video/encode": "POST - Encode a message into video",
+            "/api/video/decode": "POST - Decode a message from video",
+            "/info": "GET - Get detailed API documentation"
         }
     })
 
 @app.route('/info', methods=['GET'])
 def info():
-    """Get information about the API usage"""
+    """API Documentation Endpoint
+    Provides detailed information about the API, its purpose, and usage.
+    """
     return jsonify({
-        "api_name": "Text Steganography API",
-        "description": "Hide and reveal secret messages in plain text using zero-width characters",
-        "algorithm": "Original steganography algorithm preserved",
-        "encoding": {
-            "step1": "/check-capacity - Check cover text capacity first",
-            "step2": "/encode - Encode secret message into cover text",
-            "method": "POST",
-            "workflow": "First check capacity, then encode based on returned limits"
+        "api_name": "Steganography Website API",
+        "description": "A comprehensive API for hiding and revealing secret messages in various media formats including text, images, audio, and video.",
+        "version": "1.0",
+        "features": {
+            "image_steganography": {
+                "encode": "Hide a message in an image",
+                "decode": "Extract a hidden message from an image"
+            },
+            "text_steganography": {
+                "check_capacity": "Check the capacity of text for hiding messages",
+                "encode": "Hide a message in text",
+                "decode": "Extract a hidden message from text"
+            },
+            "audio_steganography": {
+                "check_capacity": "Check the capacity of audio for hiding messages",
+                "encode": "Hide a message in audio",
+                "decode": "Extract a hidden message from audio"
+            },
+            "video_steganography": {
+                "encode": "Hide a message in video",
+                "decode": "Extract a hidden message from video"
+            }
         },
-        "decoding": {
-            "endpoint": "/decode", 
-            "method": "POST",
-            "required_fields": ["stego_text"],
-            "description": "Extracts hidden message from steganographic text"
+        "usage": {
+            "step1": "Choose the appropriate media type (text, image, audio, video)",
+            "step2": "Use the corresponding encode endpoint to hide a message",
+            "step3": "Use the corresponding decode endpoint to retrieve the hidden message"
         },
-        "capacity_rule": "Maximum characters = floor(word_count / 6)",
-        "supported_characters": "ASCII characters 32-127"
+        "limitations": "Maximum file size is 50MB. Ensure the media format is supported."
     })
 
 """Text Steganography"""
