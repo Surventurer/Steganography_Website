@@ -16,8 +16,9 @@ Welcome to **Steganography Website**, a comprehensive steganography platform tha
 - **Backend**: Flask, Python
 - **Styling**: Tailwind CSS with custom themes
 
-## Getting Started
+## Getting Started locally
 
+- Before continue, install FFmpeg in your path
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/hideaway.git
@@ -29,14 +30,14 @@ Welcome to **Steganography Website**, a comprehensive steganography platform tha
 3. Install dependencies:
    ```bash
    npm install
-   pip install -r src/backend/requirements.txt
+   uv add -r src/backend/requirements.txt
    ```
 4. Start the development server:
    ```bash
    npm run dev
-   python src/backend/main.py
+   uv run src/backend/main.py
    ```
-5. Open your browser and navigate to `http://localhost:3000`.
+5. Open your browser and navigate to `http://localhost:3000` for frontend and `http://127.0.0.1:8080` for backend.
 
 ## Folder Structure
 
