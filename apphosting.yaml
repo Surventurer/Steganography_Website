@@ -1,0 +1,24 @@
+# Settings to manage and configure a Firebase App Hosting backend.
+# https://firebase.google.com/docs/app-hosting/configure
+
+# The Next.js frontend is served by the default backend.
+
+# Configuration for the Python backend service.
+backend:
+  id: python-backend
+  # Command to run the Python server.
+  # Gunicorn is a production-ready WSGI server.
+  run: gunicorn --bind 0.0.0.0:$PORT main:app
+  # Directory containing the Python source code and requirements.txt.
+  source: src/backend
+
+runConfig:
+  # Increase this value to automatically spin up more instances.
+  maxInstances: 1
+
+# Rewrites requests made to /api/... to the Python backend.
+# All other requests are handled by the Next.js frontend.
+rewrites:
+- source: /api{,/**}
+  backend:
+    id: python-backend
