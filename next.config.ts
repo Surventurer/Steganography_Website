@@ -9,13 +9,21 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   async rewrites() {
-    if (process.env.NODE_ENV !== 'development') {
-      return [];
+    if (process.env.NODE_ENV === 'development') {
+      // Local development rewrites
+      return [
+        {
+          source: '/api/:path*',
+          destination: 'http://127.0.0.1:8080/api/:path*',
+        },
+      ];
     }
+
+    // Production rewrites
     return [
       {
         source: '/api/:path*',
-        destination: 'http://127.0.0.1:8080/api/:path*',
+        destination: `${process.env.BACKEND_URL}/api/:path*`, // Use the environment variable
       },
     ];
   },
