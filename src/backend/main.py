@@ -9,8 +9,11 @@ from text_steganography import TextSteganography
 from audio_steganography import AudioSteganography
 import wave
 import numpy as np
+from video_steganography import VideoSteganography
+# from flask_cors import CORS
 
 app = Flask(__name__)
+# CORS(app)
 
 ALLOWED_EXTENSIONS = {'png', 'jpeg', 'jpg', 'tiff', 'jfif', 'pjp', 'pjpeg', 'tif'}
 
@@ -509,6 +512,133 @@ def decode_audio():
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": f"An unexpected server error occurred: {str(e)}"}), 500
+
+"""Vedio Steganography"""
+ALLOWED_VIDEO_EXTENSIONS = {'ogm', 'wmv', 'mpg', 'webm', 'ogv', 'mov', 'asx', 'mpeg', 'mp4', 'm4v', 'avi'}
+
+@app.route("/api/video/encode", methods=["POST"])
+def encode_video():
+    try:
+        if 'video' not in request.files:
+            return jsonify({"error": "No video file provided."}), 400
+
+        file = request.files['video']
+        message = request.form.get('message', '')
+        filename = file.filename
+
+        if filename == '':
+            return jsonify({"error": "No selected file."}), 400
+        if not message:
+            return jsonify({"error": "No message provided."}), 400
+
+        ext = get_file_extension(filename)
+        if ext not in ALLOWED_VIDEO_EXTENSIONS:
+            return jsonify({"error": f"Unsupported video format. Please use: {', '.join(ALLOWED_VIDEO_EXTENSIONS)}"}), 400
+
+        input_path = os.path.join(tempfile.gettempdir(), filename)
+        output_path = os.path.join(tempfile.gettempdir(), f"encoded_{filename}")
+
+        file.save(input_path)
+
+        try:
+            vs = VideoSteganography()
+            result = vs.encode(input_path, message, output_path)
+
+            if not result["status"]:
+                return jsonify({"error": result.get("error", "Failed to encode video.")}), 500
+
+            return send_file(result["stego_video"], as_attachment=True, download_name=f"encoded_{filename}")
+        except Exception as e:
+            traceback.print_exc()
+            return jsonify({"error": f"Failed to encode video: {e}"}), 500
+        finally:
+            if os.path.exists(input_path):
+                os.remove(input_path)
+            if os.path.exists(output_path):
+                os.remove(output_path)
+
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": f"An unexpected error occurred: {e}"}), 500
+
+
+@app.route("/api/video/decode", methods=["POST"])
+def decode_video():
+    try:
+        if 'video' not in request.files:
+            return jsonify({"error": "No video file provided."}), 400
+
+        file = request.files['video']
+        filename = file.filename
+
+        if filename == '':
+            return jsonify({"error": "No selected file."}), 400
+
+        ext = get_file_extension(filename)
+        if ext not in ALLOWED_VIDEO_EXTENSIONS:
+            return jsonify({"error": f"Unsupported video format. Please use: {', '.join(ALLOWED_VIDEO_EXTENSIONS)}"}), 400
+
+        input_path = os.path.join(tempfile.gettempdir(), filename)
+
+        file.save(input_path)
+
+        try:
+            vs = VideoSteganography()
+            result = vs.decode(input_path)
+
+            if not result["status"]:
+                return jsonify({"error": result.get("error", "Failed to decode video.")}), 500
+
+            return jsonify({"message": result["hidden_message"]}), 200
+        except Exception as e:
+            traceback.print_exc()
+            return jsonify({"error": f"Failed to decode video: {e}"}), 500
+        finally:
+            if os.path.exists(input_path):
+                os.remove(input_path)
+
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({"error": f"An unexpected error occurred: {e}"}), 500
+
+@app.route('/api/video/download/<filename>', methods=['GET'])
+def download_file(filename):
+    try:
+        file_path = os.path.join(app.config['OUTPUT_FOLDER'], filename)
+        if os.path.exists(file_path):
+            return send_file(file_path, as_attachment=True)
+        else:
+            return jsonify({"error": "File not found"}), 404
+    except Exception as e:
+        return jsonify({"error": f"Download error: {str(e)}"}), 500
+
+@app.route('/api/video/cleanup', methods=['POST'])
+def cleanup_files():
+    """Clean up old files (optional endpoint for maintenance)"""
+    try:
+        cleanup_count = 0
+        
+        # Clean upload folder
+        for file in os.listdir(app.config['UPLOAD_FOLDER']):
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], file)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+                cleanup_count += 1
+        
+        # Clean output folder
+        for file in os.listdir(app.config['OUTPUT_FOLDER']):
+            file_path = os.path.join(app.config['OUTPUT_FOLDER'], file)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+                cleanup_count += 1
+                
+        return jsonify({
+            "success": True,
+            "message": f"Cleaned up {cleanup_count} files"
+        })
+        
+    except Exception as e:
+        return jsonify({"error": f"Cleanup error: {str(e)}"}), 500
 
 
 @app.errorhandler(413)

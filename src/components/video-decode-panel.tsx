@@ -24,7 +24,7 @@ export function VideoDecodePanel({ className }: { className?: string }) {
     }
   };
 
-  const handleDecode = () => {
+  const handleDecode = async () => {
     if (!videoFile) {
       toast({
         variant: 'destructive',
@@ -37,12 +37,28 @@ export function VideoDecodePanel({ className }: { className?: string }) {
     setIsDecoding(true);
     setDecodedMessage(null);
 
-    // Placeholder for future Python integration
-    setTimeout(() => {
-        setDecodedMessage("This is a placeholder for the revealed message from video.");
-        toast({ title: 'Success!', description: 'A secret message was found (placeholder).' });
-        setIsDecoding(false);
-    }, 1000);
+    const formData = new FormData();
+    formData.append('video', videoFile);
+
+    try {
+      const response = await fetch('/api/video/decode', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setDecodedMessage(data.message);
+        toast({ title: 'Success!', description: 'Message decoded successfully.' });
+      } else {
+        const error = await response.json();
+        toast({ variant: 'destructive', title: 'Error', description: error.error });
+      }
+    } catch (error) {
+      toast({ variant: 'destructive', title: 'Error', description: 'Failed to decode video.' });
+    } finally {
+      setIsDecoding(false);
+    }
   };
 
   return (

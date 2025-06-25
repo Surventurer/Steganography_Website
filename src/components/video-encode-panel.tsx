@@ -22,7 +22,7 @@ export function VideoEncodePanel({ className }: { className?: string }) {
     }
   };
   
-  const handleEncode = () => {
+  const handleEncode = async () => {
     if (!videoFile || !message) {
       toast({
         variant: 'destructive',
@@ -31,17 +31,47 @@ export function VideoEncodePanel({ className }: { className?: string }) {
       });
       return;
     }
-    
+
     setIsEncoding(true);
-    
-    // Placeholder for future Python integration
-    setTimeout(() => {
+
+    const formData = new FormData();
+    formData.append('video', videoFile);
+    formData.append('message', message);
+
+    try {
+      const response = await fetch('/api/video/encode', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `encoded_${videoFile.name}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        toast({ title: 'Success!', description: 'Video encoded successfully.' });
+      } else {
+        const error = await response.json();
         toast({
-            title: 'Ready for Integration!',
-            description: 'The frontend is ready. You can now integrate your Python backend logic.',
+          variant: 'destructive',
+          title: 'Encoding Failed',
+          description: error.error || 'An unknown error occurred while encoding the video.',
         });
-        setIsEncoding(false);
-    }, 1000);
+      }
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'An unexpected error occurred while encoding the video.',
+      });
+    } finally {
+      setIsEncoding(false);
+    }
   };
 
   return (
