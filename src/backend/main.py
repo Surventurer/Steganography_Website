@@ -10,10 +10,8 @@ from audio_steganography import AudioSteganography
 import wave
 import numpy as np
 from video_steganography import VideoSteganography
-# from flask_cors import CORS
 
 app = Flask(__name__)
-# CORS(app)
 
 ALLOWED_EXTENSIONS = {'png', 'jpeg', 'jpg', 'tiff', 'jfif', 'pjp', 'pjpeg', 'tif'}
 
