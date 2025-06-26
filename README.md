@@ -21,7 +21,7 @@ Welcome to **Steganography Website**, a comprehensive steganography platform tha
 - Before continue, install FFmpeg in your path
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/hideaway.git
+   git clone https://github.com/Surventurer/Steganography_Website.git
    ```
 2. Navigate to the project directory:
    ```bash
