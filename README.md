@@ -18,7 +18,7 @@ Welcome to **Steganography Website**, a comprehensive steganography platform tha
 
 ## Getting Started locally
 
-- Before continue, install FFmpeg in your path
+- Before continue, install FFmpeg, npm and uv in your path
 1. Clone the repository:
    ```bash
    git clone https://github.com/Surventurer/Steganography_Website.git
@@ -51,7 +51,7 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ## License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+This project is licensed under the GPL-3.0 License. See the `LICENSE` file for details.
 
 ## Acknowledgments
 
