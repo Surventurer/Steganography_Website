@@ -10,28 +10,36 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
-import { Terminal, Search, Loader2 } from 'lucide-react';
+import { Terminal, Search, Loader2, FileWarning } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function TextDecodePanel({ className }: { className?: string }) {
   const { toast } = useToast();
-  const [stegoText, setStegoText] = useState('');
+  const [textFile, setTextFile] = useState<File | null>(null);
   const [decodedMessage, setDecodedMessage] = useState<string | null>(null);
   const [isDecoding, setIsDecoding] = useState(false);
 
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setTextFile(file);
+      setDecodedMessage(null); // Reset on new file
+    }
+  };
+
   const handleDecode = async () => {
-    if (!stegoText) {
+    if (!textFile) {
       toast({
         variant: 'destructive',
-        title: 'No Text',
-        description: 'Please enter the text containing a hidden message.',
+        title: 'No File',
+        description: 'Please select a text file to decode.',
       });
       return;
     }
@@ -39,64 +47,70 @@ export function TextDecodePanel({ className }: { className?: string }) {
     setIsDecoding(true);
     setDecodedMessage(null);
 
+    const formData = new FormData();
+    formData.append('text_file', textFile);
+
     try {
       const response = await fetch('/api/text/decode', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ stego_text: stegoText }),
+        body: formData,
       });
 
-      const data = await response.json();
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+      
+      const result = await response.json();
+      console.log('Response result:', result);
 
-      if (response.ok && data.success) {
-        setDecodedMessage(data.hidden_message);
-        toast({
-          title: 'Success!',
-          description: 'A secret message was revealed.',
-        });
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to decode text.');
+      }
+
+      if (result.success && result.hidden_message) {
+        setDecodedMessage(result.hidden_message);
+        toast({ title: 'Success!', description: 'A secret message was found.' });
       } else {
+        setDecodedMessage(''); // Set to empty string to indicate "not found"
         toast({
-          variant: 'destructive',
-          title: 'Decode Failed',
-          description: 'No hidden message could be found.',
+          variant: 'default',
+          title: 'No Message Found',
+          description: result.error || 'We couldn\'t find a secret message in this text.',
         });
       }
-    } catch (error) {
-      console.error('Decode error:', error);
+    } catch (error: any) {
       toast({
         variant: 'destructive',
-        title: 'Error',
-        description: 'Something went wrong while decoding.',
+        title: 'Decoding Error',
+        description: error.message || 'An unexpected error occurred.',
       });
+      setDecodedMessage(null);
     } finally {
       setIsDecoding(false);
     }
   };
 
   return (
-    <Card className={cn('w-full border-2 border-primary/20 shadow-lg', className)}>
+    <Card className={cn('w-full border-2 border-primary/20 shadow-lg flex flex-col', className)}>
       <CardHeader>
         <CardTitle>Decode a Message from Text</CardTitle>
-        <CardDescription>Enter text to reveal its hidden secret.</CardDescription>
+        <CardDescription>Upload an text to reveal its hidden secret.</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 flex-grow flex flex-col">
         <div className="space-y-2">
-          <Label htmlFor="stego-text">Enter Text to Decode</Label>
-          <Textarea
-            id="stego-text"
-            placeholder="Paste the text that you suspect contains a hidden message..."
-            value={stegoText}
-            onChange={(e) => setStegoText(e.target.value)}
-            className="min-h-[150px]"
+          <Label htmlFor="text-decode-upload">Upload Text to Decode</Label>
+          <Input 
+            id="text-decode-upload" 
+            type="file" 
+            accept=".txt" 
+            onChange={handleTextChange} 
+            className="file:text-primary" 
           />
         </div>
 
         <Button
           onClick={handleDecode}
-          disabled={isDecoding || !stegoText}
-          className="w-full text-lg py-6"
+          disabled={isDecoding || !textFile}
+          className="w-full text-lg py-6 mt-auto"
         >
           {isDecoding ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -107,13 +121,23 @@ export function TextDecodePanel({ className }: { className?: string }) {
         </Button>
 
         {decodedMessage !== null && (
-          <Alert className="mt-4">
-            <Terminal className="h-4 w-4" />
-            <AlertTitle>Revealed Message</AlertTitle>
-            <AlertDescription className="font-code text-base mt-2 whitespace-pre-wrap">
-              {decodedMessage}
-            </AlertDescription>
-          </Alert>
+          decodedMessage ? (
+            <Alert className="mt-4">
+              <Terminal className="h-4 w-4" />
+              <AlertTitle>Revealed Message</AlertTitle>
+              <AlertDescription className="font-code text-base mt-2 whitespace-pre-wrap break-words">
+                {decodedMessage}
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <Alert variant="destructive" className="mt-4">
+              <FileWarning className="h-4 w-4" />
+              <AlertTitle>No Message Found</AlertTitle>
+              <AlertDescription>
+                This text file does not appear to contain a hidden message, or the data may be corrupted.
+              </AlertDescription>
+            </Alert>
+          )
         )}
       </CardContent>
     </Card>

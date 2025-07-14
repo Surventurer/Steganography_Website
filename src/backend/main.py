@@ -317,15 +317,39 @@ def encode():
 def decode():
     """Decode hidden message from steganographic text"""
     try:
-        data = request.get_json()
+        stego_text = ""
         
-        if not data:
-            return jsonify({
-                "success": False,
-                "error": "No JSON data provided"
-            }), 400
-        
-        stego_text = data.get('stego_text', '').strip()
+        # Check if it's a file upload
+        if 'text_file' in request.files:
+            file = request.files['text_file']
+            
+            if file.filename == '':
+                return jsonify({
+                    "success": False,
+                    "error": "No file selected"
+                }), 400
+            
+            # Read the file content
+            try:
+                file_content = file.read().decode('utf-8')
+                stego_text = file_content.strip()
+            except UnicodeDecodeError:
+                return jsonify({
+                    "success": False,
+                    "error": "Unable to decode file. Please ensure it's a valid UTF-8 text file."
+                }), 400
+            
+        else:
+            # Handle JSON request (existing functionality)
+            data = request.get_json()
+            
+            if not data:
+                return jsonify({
+                    "success": False,
+                    "error": "No JSON data provided"
+                }), 400
+            
+            stego_text = data.get('stego_text', '').strip()
         
         if not stego_text:
             return jsonify({

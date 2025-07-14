@@ -18,7 +18,7 @@ Welcome to **Steganography Website**, a comprehensive steganography platform tha
 
 ## Getting Started locally
 
-- Before continue, install FFmpeg, npm and uv in your path
+- Before continue, install FFmpeg, npm (10.8.2) and uv in your path
 1. Clone the repository:
    ```bash
    git clone https://github.com/Surventurer/Steganography_Website.git
@@ -30,11 +30,15 @@ Welcome to **Steganography Website**, a comprehensive steganography platform tha
 3. Install dependencies:
    ```bash
    npm install
+   ```
+   ```bash
    uv add -r src/backend/requirements.txt
    ```
 4. Start the development server:
    ```bash
    npm run dev
+   ```
+   ```bash
    uv run src/backend/main.py
    ```
 5. Open your browser and navigate to `http://localhost:3000` for frontend and `http://127.0.0.1:8080` for backend.
