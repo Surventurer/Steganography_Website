@@ -354,7 +354,7 @@ def decode():
         if not stego_text:
             return jsonify({
                 "success": False,
-                "error": "stego_text is required"
+                "error": "Text file is empty"
             }), 400
         
         # Perform decoding using original algorithm
