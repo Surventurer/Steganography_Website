@@ -163,7 +163,7 @@ def decode_image():
         return jsonify({"error": f"An unexpected error occurred: {e}"}), 500
 
 
-@app.route("/home", methods=["GET"])
+@app.route("/", methods=["GET"])
 def home():
     """API Home Endpoint
     Provides a brief overview of the API and its available endpoints.
@@ -186,7 +186,7 @@ def home():
         }
     })
 
-@app.route('/', methods=['GET'])
+@app.route('/info', methods=['GET'])
 def info():
     """API Documentation Endpoint
     Provides detailed information about the API, its purpose, and usage.
